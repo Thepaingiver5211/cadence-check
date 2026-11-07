@@ -1,0 +1,31 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.11 is the floor: tomllib entered the stdlib there, and avoiding a TOML
+        # dependency is the reason this tool installs with nothing behind it.
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e ".[dev]"
+      - run: pytest -q
+      # The shipped example must keep failing for the one reason it is meant to
+      # demonstrate. If it ever exits 0, the example drifted and the README is lying.
+      - name: example config still demonstrates a failure
+        run: |
+          if python -m cadence_check examples/claims.toml; then
+            echo "::error::examples/claims.toml exited 0 — it is supposed to fail"
+            exit 1
+          fi

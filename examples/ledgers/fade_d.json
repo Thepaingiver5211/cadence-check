@@ -1,0 +1,40 @@
+{
+  "strategy_id": "FADE_D",
+  "open_positions": {
+    "S0": {
+      "entry_date": "2026-09-07"
+    },
+    "S1": {
+      "entry_date": "2026-09-08"
+    },
+    "S2": {
+      "entry_date": "2026-09-09"
+    }
+  },
+  "closed_trades": [
+    {
+      "entry_date": "2026-09-10"
+    },
+    {
+      "entry_date": "2026-10-04"
+    },
+    {
+      "entry_date": "2026-10-05"
+    },
+    {
+      "entry_date": "2026-10-06"
+    },
+    {
+      "entry_date": "2026-10-29"
+    },
+    {
+      "entry_date": "2026-10-30"
+    },
+    {
+      "entry_date": "2026-10-31"
+    },
+    {
+      "entry_date": "2026-11-01"
+    }
+  ]
+}

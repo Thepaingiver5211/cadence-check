@@ -1,0 +1,50 @@
+# Example config. Everything a strategy claims about its own rhythm, in one place,
+# checkable. Run it from the repo root:
+#
+#     python -m cadence_check examples/claims.toml
+#
+# Four of the five below are labelled honestly and pass. ROTATION_B is labelled
+# "continuous" and has not traded in three months, which is the failure worth seeing --
+# its historical median gap is a perfectly ordinary 13 days, so a band-only check would
+# wave it through. That is rule 2 earning its place.
+
+[defaults]
+# A label that promises activity cannot sit on a book quieter than this, whatever its
+# median says. Tune it to your slowest "active" strategy, not your fastest.
+stale_days = 35
+
+# Declaring ANY band replaces the built-in vocabulary entirely, so a typo cannot
+# accidentally match a default you had forgotten about. Use the words your own docs use;
+# these are only a starting point.
+[bands]
+daily       = { min = 1, max = 2 }
+continuous  = { min = 1, max = 7 }
+clustered   = { min = 1, max = 6, min_max_gap = 10 }
+weekly      = { min = 3, max = 11 }
+monthly     = { min = 18, max = 40, promises_activity = false }
+event-driven = { min = 10, promises_activity = false, allow_empty = true }
+
+[[strategy]]
+name = "Mean Revert A"
+ledger = "ledgers/mean_revert_a.json"
+cadence = "daily"
+
+[[strategy]]
+name = "Rotation B"
+ledger = "ledgers/rotation_b.json"
+cadence = "continuous"        # <-- the lie. It stopped trading three months ago.
+
+[[strategy]]
+name = "Rebalancer C"
+ledger = "ledgers/rebalancer_c.json"
+cadence = "monthly"
+
+[[strategy]]
+name = "Fade D"
+ledger = "ledgers/fade_d.json"
+cadence = "clustered"
+
+[[strategy]]
+name = "Crisis Hedge E"
+ledger = "ledgers/crisis_hedge_e.json"
+cadence = "event-driven"      # never traded, and that is permitted for this label

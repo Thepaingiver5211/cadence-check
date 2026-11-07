@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cadence-check"
+version = "0.1.0"
+description = "Fail the build when a published cadence claim disagrees with the trade ledger behind it."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"          # tomllib is stdlib from 3.11
+keywords = ["trading", "ledger", "documentation", "ci", "drift", "backtesting"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Financial and Insurance Industry",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Office/Business :: Financial :: Investment",
+  "Topic :: Software Development :: Quality Assurance",
+]
+
+# No runtime dependencies, on purpose. This is a thing you drop into CI; it should not
+# drag a resolver behind it, and tomllib has been stdlib since 3.11.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+cadence-check = "cadence_check.cli:main"
+
+[tool.setuptools]
+packages = ["cadence_check"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
