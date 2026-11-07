@@ -108,7 +108,7 @@ the process ran and counting it would make everything look daily.
 ## Quick start
 
 ```bash
-git clone https://github.com/YOURNAME/cadence-check
+git clone https://github.com/Thepaingiver5211/cadence-check
 cd cadence-check
 python -m cadence_check examples/claims.toml     # see it fail on purpose
 ```
